@@ -1,0 +1,134 @@
+/*using UnityEngine;*/
+/**/
+/*[RequireComponent(typeof(HingeJoint))]*/
+/*public class MotorController-failed-spring : MonoBehaviour {*/
+/*    private HingeJoint hinge;*/
+/*    private JointMotor motor;*/
+/**/
+/*    [Header("Motor Settings")]*/
+/*    public float motorSpeed = 100f;      // Speed (deg/sec)*/
+/*    public float motorForce = 1000f;     // Maximum Torque*/
+/*    public float holdStiffness = 5000f;  // How strongly we hold the angle when no input or when target reached*/
+/*    public float angleTolerance = 1f;    // How close to target angle we must be to consider it "reached"*/
+/**/
+/*    private float holdAngle;*/
+/*    private bool holdingAngle = true;   // If true, we hold a particular angle strongly*/
+/*    private bool movingToAngle = false;  // If true, we are currently rotating to a target angle*/
+/*    private float targetAngleToReach;*/
+/*    private float targetSpeed;*/
+/**/
+/*    void Start() {*/
+/*        hinge = GetComponent<HingeJoint>();*/
+/*        motor = hinge.motor;*/
+/*        motor.force = motorForce;*/
+/*        hinge.useMotor = true;*/
+/*        // By default, do not free spin.*/
+/*        motor.freeSpin = false;*/
+/*        hinge.motor = motor;*/
+/**/
+/*        // Initially, just hold the current angle*/
+/*        holdAngle = hinge.angle;*/
+/*        holdingAngle = true;*/
+/**/
+/*		// print the innitial transform rotation */
+/*		Debug.Log("Innitial rotation: " + hinge.angle);*/
+/*    }*/
+/**/
+/*    void Update() {*/
+/*        float currentAngle = hinge.angle;*/
+/**/
+/*        if (movingToAngle) {*/
+/*            // We are moving towards a specific angle*/
+/*            float angleError = targetAngleToReach - currentAngle;*/
+/**/
+/*            if (Mathf.Abs(angleError) <= angleTolerance) {*/
+/*                // Close enough to target, stop and hold*/
+/*                movingToAngle = false;*/
+/*                holdingAngle = true;*/
+/*                holdAngle = currentAngle;*/
+/*                motor.targetVelocity = 0;*/
+/*                hinge.motor = motor;*/
+/*            } else {*/
+/*                // Determine direction*/
+/*                float direction = Mathf.Sign(angleError);*/
+/*                motor.targetVelocity = direction * targetSpeed;*/
+/*                hinge.motor = motor;*/
+/*                holdingAngle = false;*/
+/*            }*/
+/*        } else {*/
+/*            // No ongoing "go to angle" operation*/
+/*            // Check if we should be holding angle or if there's user input*/
+/*            float input = GetInput(); // Modify this as you see fit*/
+/**/
+/*            if (Mathf.Abs(input) > 0.01f) {*/
+/*                // User input to rotate joint*/
+/*                holdingAngle = false;*/
+/*                movingToAngle = false;*/
+/*                float minLimit = hinge.limits.min;*/
+/*                float maxLimit = hinge.limits.max;*/
+/**/
+/*                if ((currentAngle >= maxLimit && input > 0)) {*/
+/*                    // Reached upper limit, hold limit*/
+/*                    holdingAngle = true;*/
+/*                    holdAngle = maxLimit;*/
+/*                    motor.targetVelocity = 0;*/
+/*                    hinge.motor = motor;*/
+/*                } else if ((currentAngle <= minLimit && input < 0)) {*/
+/*                    // Reached lower limit, hold limit*/
+/*                    holdingAngle = true;*/
+/*                    holdAngle = minLimit;*/
+/*                    motor.targetVelocity = 0;*/
+/*                    hinge.motor = motor;*/
+/*                } else {*/
+/*                    // Move with motorSpeed*/
+/*                    motor.targetVelocity = motorSpeed * input;*/
+/*                    hinge.motor = motor;*/
+/*                }*/
+/*            } else {*/
+/*                // No user input*/
+/*                if (!holdingAngle) {*/
+/*                    // If not already holding an angle, start holding current angle*/
+/*                    holdAngle = currentAngle;*/
+/*                    holdingAngle = true;*/
+/*                }*/
+/*                // If holding angle, lock it with AddTorque in FixedUpdate*/
+/*                motor.targetVelocity = 0;*/
+/*                hinge.motor = motor;*/
+/*            }*/
+/*        }*/
+/*    }*/
+/**/
+/*    void FixedUpdate() {*/
+/*        // If holding an angle, apply torque to keep it locked*/
+/*        if (holdingAngle && !movingToAngle) {*/
+/*		Debug.Log(hinge.angle + " " + holdAngle);*/
+/*            float currentAngle = hinge.angle;*/
+/*            float angleError = holdAngle - currentAngle;*/
+/*            Vector3 correctionAxis = hinge.transform.TransformDirection(hinge.axis);*/
+/*            Rigidbody rb = hinge.GetComponent<Rigidbody>();*/
+/*            if (rb != null) {*/
+/*                // Apply torque proportional to the angle error*/
+/*                rb.AddTorque(correctionAxis * angleError * holdStiffness, ForceMode.Force);*/
+/*            }*/
+/*        }*/
+/*    }*/
+/**/
+/*    public void GoToAngle(float targetAngle, float speed) {*/
+/*        targetAngleToReach = Mathf.Clamp(targetAngle, hinge.limits.min, hinge.limits.max);*/
+/*        targetSpeed = speed;*/
+/*        movingToAngle = true;*/
+/*        holdingAngle = false;*/
+/*    }*/
+/**/
+/*    /// <summary>*/
+/*    /// Placeholder for user input. Replace with your desired input logic.*/
+/*    /// For example, return 1 for clockwise, -1 for counter-clockwise, 0 for none.*/
+/*    /// </summary>*/
+/*    float GetInput() {*/
+/*        // Example: press Q to rotate anticlockwise, E to rotate clockwise*/
+/*        if (Input.GetKey(KeyCode.Q)) return -1;*/
+/*        if (Input.GetKey(KeyCode.E)) return 1;*/
+/*        return 0;*/
+/*    }*/
+/*}*/
+

@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="my_robot_arm">
+
+	<!-- Global properties -->
+	<!--<xacro:property
+	name="pi" value="3.141592653589793"/>-->
+	<xacro:property name="joint1_xyz" value="0 0 0.05" />
+	<xacro:property name="joint1_rpy" value="0 0 0" />
+	<xacro:property name="subsequent_joint_x_ideal" value="0 " />
+	<xacro:property name="subsequent_joint_y_ideal" value="${-cos(pi/3)} " />
+	<xacro:property name="subsequent_joint_z_ideal" value="${sin(pi/3)} " />
+	<xacro:property name="subsequent_joint_xyz"
+		value="
+											   ${subsequent_joint_x_ideal} 
+											   ${subsequent_joint_y_ideal+0.1} 
+											   ${subsequent_joint_z_ideal-0.155}" />
+
+	<xacro:property name="subsequent_joint_rpy" value="${pi/3} 0 0" />
+
+	<link name="base_link">
+
+		<!--<geometry>-->
+		<!--	<mesh filename="niki_arm.stl" scale="0.01 0.01 0.01" />-->
+		<!--</geometry>-->
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<box size="0.5 0.5 0.1" />
+			</geometry>
+			<material name="grey">
+				<color rgba="0.5 0.5 0.5 1.0" />
+			</material>
+		</visual>
+
+		<!--<inertial>-->
+		<!--	<origin xyz="0 0 0" rpy="0 0 0" />-->
+		<!--	<mass value="1.0" />-->
+		<!--	<inertia-->
+		<!--		ixx="0.01" ixy="0.0" ixz="0.0"-->
+		<!--		iyy="0.01" iyz="0.0"-->
+		<!--		izz="0.01" />-->
+		<!--</inertial>-->
+	</link>
+
+	<!-- part1 -->
+
+	<link name="part1">
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<mesh filename="niki_arm.stl" scale="0.01 0.01 0.01" />
+			</geometry>
+		</visual>
+	</link>
+
+	<joint name="joint1" type="revolute">
+		<parent link="base_link" />
+		<child link="part1" />
+		<origin xyz="${joint1_xyz}" rpy="${joint1_rpy}" />
+		<axis xyz="0 0 1" />
+		<limit lower="-${pi}" upper="${pi}" effort="10" velocity="1.0" />
+	</joint>
+
+	<!-- part2 -->
+
+	<link name="part2">
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<mesh filename="niki_arm.stl" scale="0.01 0.01 0.01" />
+			</geometry>
+		</visual>
+	</link>
+
+	<joint name="joint2" type="revolute">
+		<parent link="part1" />
+		<child link="part2" />
+		<origin xyz="${subsequent_joint_xyz}" rpy="${subsequent_joint_rpy}" />
+		<axis xyz="0 0 1" />
+		<limit lower="-${pi}" upper="${pi}" effort="10" velocity="1.0" />
+	</joint>
+
+	<!-- part3-->
+
+	<link name="part3">
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<mesh filename="niki_arm.stl" scale="0.01 0.01 0.01" />
+			</geometry>
+		</visual>
+	</link>
+
+	<joint name="joint3" type="revolute">
+		<parent link="part2" />
+		<child link="part3" />
+		<origin xyz="${subsequent_joint_xyz}" rpy="${subsequent_joint_rpy}" />
+		<axis xyz="0 0 1" />
+		<limit lower="-${pi}" upper="${pi}" effort="10" velocity="1.0" />
+	</joint>
+
+	<!-- part4 -->
+
+	<link name="part4">
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<mesh filename="niki_arm.stl" scale="0.01 0.01 0.01" />
+			</geometry>
+		</visual>
+	</link>
+
+	<joint name="joint4" type="revolute">
+		<parent link="part3" />
+		<child link="part4" />
+		<origin xyz="${subsequent_joint_xyz}" rpy="${subsequent_joint_rpy}" />
+		<axis xyz="0 0 1" />
+		<limit lower="-${pi}" upper="${pi}" effort="10" velocity="1.0" />
+	</joint>
+	<!---->
+	<!-- part5 -->
+	<!---->
+	<!--<link
+	name="part5">-->
+	<!--	<visual>-->
+	<!--		<origin xyz="0 0 0" rpy="0 0 0" />-->
+	<!--		<geometry>-->
+	<!--			<mesh filename="niki_arm.stl" scale="0.01 0.01 0.01" />-->
+	<!--		</geometry>-->
+	<!--	</visual>-->
+	<!--</link>-->
+	<!---->
+	<!--<joint
+	name="joint5" type="revolute">-->
+	<!--	<parent link="part4" />-->
+	<!--	<child link="part5" />-->
+	<!--	<origin xyz="${subsequent_joint_xyz}" rpy="${subsequent_joint_rpy}" />-->
+	<!--	<axis xyz="0 0 1" />-->
+	<!--	<limit lower="-${pi}" upper="${pi}" effort="10" velocity="1.0" />-->
+	<!--</joint>-->
+	<!---->
+	<!-- part6 -->
+	<!---->
+	<!--<link
+	name="part6">-->
+	<!--	<visual>-->
+	<!--		<origin xyz="0 0 0" rpy="0 0 0" />-->
+	<!--		<geometry>-->
+	<!--			<mesh filename="niki_arm.stl" scale="0.01 0.01 0.01" />-->
+	<!--		</geometry>-->
+	<!--	</visual>-->
+	<!--</link>-->
+	<!---->
+	<!--<joint
+	name="joint6" type="revolute">-->
+	<!--	<parent link="part5" />-->
+	<!--	<child link="part6" />-->
+	<!--	<origin xyz="${subsequent_joint_xyz}" rpy="${subsequent_joint_rpy}" />-->
+	<!--	<axis xyz="0 0 1" />-->
+	<!--	<limit lower="-${pi}" upper="${pi}" effort="10" velocity="1.0" />-->
+	<!--</joint>-->
+	<!---->
+</robot>

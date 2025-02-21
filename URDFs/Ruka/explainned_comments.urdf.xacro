@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="my_robot_arm">
+	<!-- Define useful properties -->
+	<!--<xacro:property
+	name="pi" value="3.141592653589793" />-->
+
+	<!-- =================================================== -->
+	<!-- Base Link -->
+	<!-- =================================================== -->
+	<link name="base_link">
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<box size="0.5 0.5 0.1" />
+			</geometry>
+			<material name="grey">
+				<color rgba="0.5 0.5 0.5 1.0" />
+			</material>
+		</visual>
+		<!-- Collision: Uncomment and adjust if needed
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.5 0.5 0.1"/>
+      </geometry>
+    </collision>
+    -->
+	</link>
+
+	<!-- =================================================== -->
+	<!-- First Arm Segment (Part 1) -->
+	<!-- =================================================== -->
+	<link name="part1">
+		<visual>
+			<!-- The visual geometry is centered at the link's frame -->
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<mesh filename="niki_arm.stl" scale="0.01 0.01 0.01" />
+			</geometry>
+		</visual>
+		<!-- Collision: Uncomment and adjust if needed
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="niki_arm.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    -->
+	</link>
+
+	<!-- =================================================== -->
+	<!-- Joint from base_link to part1 -->
+	<!-- =================================================== -->
+	<joint name="joint1" type="revolute">
+		<parent link="base_link" />
+		<child link="part1" />
+		<!-- 
+      Set the joint origin to the connecting point.
+      For example, if the base is 0.1 tall, then placing the joint at z = 0.05
+      positions it at the top of the base.
+    -->
+		<origin xyz="0 0 0.05" rpy="0 0 0" />
+		<!--
+      No additional rotation is needed here; use a simple axis.
+      The axis is defined in this joint frame (local z-axis).
+    -->
+		<axis xyz="0 0 1" />
+		<limit lower="-${pi}" upper="${pi}" effort="10" velocity="1.0" />
+	</joint>
+
+	<!-- =================================================== -->
+	<!-- Second Arm Segment (Part 2) -->
+	<!-- =================================================== -->
+	<link name="part2">
+		<visual>
+			<!--
+        Set the visual origin to identity.
+        The joint (below) will define the relative pose of part2.
+      -->
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<mesh filename="niki_arm.stl" scale="0.01 0.01 0.01" />
+			</geometry>
+		</visual>
+		<!-- Collision: Uncomment and adjust if needed
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="niki_arm.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    -->
+	</link>
+
+	<!-- =================================================== -->
+	<!-- Joint from part1 to part2 with pre-rotation -->
+	<!-- =================================================== -->
+	<joint name="joint2" type="revolute">
+		<parent link="part1" />
+		<child link="part2" />
+		<!-- 
+      Set the joint origin at the connection point on part1.
+      Here, the joint is positioned 1 unit above part1’s frame (adjust as needed).
+      The rpy is set to "0 -pi/6 0", which pre-rotates the joint frame by -30° about
+      the y-axis. This aligns the joint’s local z-axis (as defined in <axis>) with
+      the connection surface.
+    -->
+		<origin xyz="0 ${-cos(pi/3)} ${sin(pi/3)}" rpy="${pi/3} 0 0" />
+		<!--
+      Use a simple joint axis along the local z-axis.
+      Thanks to the pre-rotation in the joint's origin, this axis now corresponds to 
+      the connection surface's normal.
+    -->
+		<axis xyz="0 0 1" />
+		<limit lower="-${pi}" upper="${pi}" effort="10" velocity="1.0" />
+	</joint>
+	<!-- =================================================== -->
+	<!-- Second Arm Segment (Part 3) -->
+	<!-- =================================================== -->
+	<link name="part3">
+		<visual>
+			<!--
+        Set the visual origin to identity.
+        The joint (below) will define the relative pose of part2.
+      -->
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<mesh filename="niki_arm.stl" scale="0.01 0.01 0.01" />
+			</geometry>
+		</visual>
+		<!-- Collision: Uncomment and adjust if needed
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="niki_arm.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    -->
+	</link>
+
+	<!-- =================================================== -->
+	<!-- Joint from part1 to part2 with pre-rotation -->
+	<!-- =================================================== -->
+	<joint name="joint3" type="revolute">
+		<parent link="part2" />
+		<child link="part3" />
+		<!-- 
+      Set the joint origin at the connection point on part1.
+      Here, the joint is positioned 1 unit above part1’s frame (adjust as needed).
+      The rpy is set to "0 -pi/6 0", which pre-rotates the joint frame by -30° about
+      the y-axis. This aligns the joint’s local z-axis (as defined in <axis>) with
+      the connection surface.
+    -->
+		<origin xyz="0 ${-cos(pi/3)} ${sin(pi/3)}" rpy="${pi/3} 0 0" />
+		<!--
+      Use a simple joint axis along the local z-axis.
+      Thanks to the pre-rotation in the joint's origin, this axis now corresponds to 
+      the connection surface's normal.
+    -->
+		<axis xyz="0 0 1" />
+		<limit lower="-${pi}" upper="${pi}" effort="10" velocity="1.0" />
+	</joint>
+
+</robot>
