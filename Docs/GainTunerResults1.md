@@ -20,6 +20,9 @@ All lines are green which means that it perfectly matches the expected path.
 
 **Future note** - if it goes wrong (red mismatch) the problem is either in the torques or the links
 
+---
+<br>
+
 ## Step Function Joint Plots
 
 Unlike the sinusoidal gains test, perfect position tracking is not expected in this test. This test serves to validate whether an asset behaves reasonably when sent discontinuous joint commands. The duration of time that each joint is commanded to be at its high position is determined by approximating the time expected for that joint to get there if saturating either maximum velocity or effort. The results can be interpretted as reasonable if the position plots are smooth and the maximum positions are reached at roughly the same time as predicted.
