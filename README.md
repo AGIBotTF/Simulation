@@ -12,6 +12,8 @@
 - 16+ GB of RAM
 - NVIDIA GeForce RTX GPU (tested on rtx 3060, older could work?)
 - 6+ logical cores
+<br>
+---
 
 ### Set for
 
