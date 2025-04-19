@@ -1,6 +1,6 @@
 # Simulation for AGI Robot - TUES 2025
 
-## This will be the repository for the simulation of the AGI Robot (insert better name here).
+## This will be the repository for the simulation of the AGI Robot
 
 ### Set for
 
