@@ -7,6 +7,7 @@
 - Isaac lab 2.0.1
 - Python 3.9.0
 <br>
+
 ### Hardware Requirements: <br>
 - 16+ GB of RAM
 - NVIDIA GeForce RTX GPU (tested on rtx 3060, older could work?)
