@@ -1,8 +1,19 @@
 # Simulation for AGI Robot - TUES 2025
+<br>
+This will be the repository for the simulation of the AGI Robot
 
-## This will be the repository for the simulation of the AGI Robot
+![Demo GIF](images/ARMS.gif)
+
+^ visualisation of the final training ^
+
+For more info watch our video about the hole project:
+
+[![Watch the video](https://img.youtube.com/vi/3Mx1ZGoJDiA/0.jpg)](https://www.youtube.com/watch?v=3Mx1ZGoJDiA)
+
+
 ---
-### Software Requirements:
+
+#### Software Requirements:
 - Isaac sim 4.5.0 python env
 - Isaac lab 2.0.1
 - Python 3.9.0
